@@ -132,3 +132,12 @@ resource "azurerm_linux_virtual_machine" "example" {
     environment = "production"
   }
 }
+
+data "azurerm_public_ip" "mtc-ip-data" {
+  name                = azurerm_public_ip.example.name
+  resource_group_name = azurerm_resource_group.example.name
+}
+
+output "azurerm_public_ip" {
+  value = "${azurerm_linux_virtual_machine.example.name}: ${data.azurerm_public_ip.mtc-ip-data.ip_address}"
+}
